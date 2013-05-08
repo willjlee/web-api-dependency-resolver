@@ -1,0 +1,27 @@
+Using the Web API Dependency Resolver
+
+http://www.asp.net/web-api/overview/extensibility/using-the-web-api-dependency-resolver
+
+note: There's no code for this tutorial.
+also, see extra link near bottom for more info.
+----
+
+In the API with CRUD tutorial, used this line in the controller:
+private static IProductRepository repository = new ProductRepository();
+
+This ties it to a specific implementation of the repository, which isn't the best, and is where the dependency resolver comes in.
+
+Can inject the dependency in the constructor (pass in 'repository' in this case), but that won't work with webAPI since the controller is created automatically by the framework.
+
+The solution is to create a dependency resolver, which implements IDependencyResolver.
+
+You can create your own dependency resolver (there is a simple example in the tutorial) but many already exist.
+
+The D.R. is added in the Global.asax file, in the Application_Start method (see the tutorial for exact code).
+
+Dependency resolvers also use the IDisposable interface to manage object lifetimes, as controllers are created per request.
+
+"An IoC container is a software component that is responsible for creating dependencies. IoC containers provide a general framework for dependency injection. If you use an IoC container, then you don’t need to wire up objects directly in code. Several open-source .Net IoC containers are available, such as Autofac, Castle Windsor, Ninject, Spring.NET, StructureMap, and others."
+
+A short example using the Unity IoC is given in the tutorial, but a more in-depth Unity example is at:
+http://netmvc.blogspot.com/2012/04/dependency-injection-in-aspnet-mvc-4.html
